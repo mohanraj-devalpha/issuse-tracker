@@ -1,10 +1,17 @@
-"use client"
+"use client";
 import React from 'react'
 import Link from 'next/link'
 import { AiFillBug } from "react-icons/ai";
 
+//usePathname is used to get the current path
+import { usePathname } from 'next/navigation';
+//classname package is used to conditionally join classNames together
+import classNames from 'classnames';
+
 
 const NavBar = () => {
+
+  const currentPath = usePathname();
   const links =[
     {label: "Dashboard", href: "/"},
     {label: "Issues", href: "/issues"},
@@ -17,9 +24,15 @@ const NavBar = () => {
         {links.map(link => 
         <Link 
         key={link.href} 
-        className='text-zinc-500 hover:text-zinc-800 transition-colors'
+        className=
+        {classNames({
+          'hover:text-zinc-800 transition-colors': true,
+          'text-zinc-950': link.href === currentPath,
+          'text-zinc-500': link.href !== currentPath,
+        }
+        )
+      }
         href={link.href} >{link.label}</Link>)}
-        
       </ul>
     </nav>
     </div>
